@@ -3,8 +3,9 @@
 #include <string>
 #include <vector>
 
-void permutationWithoutRepetition(std::string& orig, std::string& perm);
+void permutationWithoutRepetition(std::string&, std::string&);
 void permutationWithRepetition(std::vector<std::string>&, std::string, std::string, const int);
+void combinationsWithoutRepetitions(std::vector<int>, std::vector<int>, int, int &);
 
 int main(){
 	std::string input;
@@ -12,7 +13,7 @@ int main(){
 	//std::string perm;
 	//permutationWithoutRepetition(input, perm);
 	
-	int length = input.size();		// length of permutations
+	int length = input.size();
 	std::vector<std::string> permutations;
 	// Here we loop through all the possible lengths
 	for (int i = 1; i <= length; i++)
@@ -21,6 +22,16 @@ int main(){
 	for (int i = 0; i < permutations.size(); i++)
 		std::cout << permutations[i] << "\n";
 	
+	/*
+	int n, m, ile = 0;
+	std::cin >> n >> m;
+	std::vector<int> numbers, notUsed;
+	for (int i = 0; i < n+1; i++)
+		numbers.emplace_back(i);
+
+	combinationsWithoutRepetitions(notUsed, numbers, m, ile);
+	std::cout << "How many listed : " << ile << "\n";
+	*/
 	return 0;
 }
 
@@ -50,4 +61,30 @@ void permutationWithRepetition(std::vector<std::string> &permutations, std::stri
 			// Next character of input added
 			// "length" is decreased, because we have added a new character
 			permutationWithRepetition(permutations, input, prefix + input[i], length - 1);
+};
+
+void combinationsWithoutRepetitions(std::vector<int> used, std::vector<int> notUsed, int depth, int &ile) {
+	std::vector<int> used2, notUsed2;
+	for (int i = 0; i < notUsed.size() && depth > 0; i++) {
+		// sprawdzamy czy sie dobrze wypisuje itd
+		if (used.size() == 0 || used[used.size()-1] < notUsed[i]) {
+			used2 = used;
+			notUsed2 = notUsed;
+			used2.emplace_back(notUsed[i]);
+			notUsed2.erase(notUsed2.begin() + i);
+			combinationsWithoutRepetitions(used2, notUsed2, depth - 1, ile);
+		}
+	}
+	if (depth == 0) {
+		if (!notUsed.size()) {
+			for (int i = 0; i < used.size(); i++)
+				std::cout << used[i] << " ";
+			std::cout << "\n";
+			ile++;
+		}
+		for (int i = 0; i < used.size(); i++)
+			std::cout << used[i] << " ";
+		std::cout << "\n";
+		ile++;
+	}
 };
