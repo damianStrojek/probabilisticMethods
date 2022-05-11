@@ -3,12 +3,12 @@
 #include <time.h>
 #define TO_RAND 100000
 
-int main(){
-	srand(time(0));
+int main() {
+	std::srand(time(0));
 	// Probability of the appearance of a pair of numbers
-	float probabilities[4][4] = { 
+	float probabilities[4][4] = {
 						{ 0.1, 0.0, 0.1, 0.2 },
-						{ 0.0, 0.05, 0.05, 0.0 },
+						{ 0.0, 0.05, 0.05, 0.5 },
 						{ 0.0, 0.05, 0.05, 0.0 },
 						{ 0.2, 0.1, 0.0, 0.1 } };
 
@@ -39,10 +39,10 @@ int main(){
 	// Flag so I can dodge using `goto`
 	bool flag = 0;
 	while (iterator < TO_RAND) {
-		float x = (float) rand() / (float) RAND_MAX;
+		float x = (float)rand() / (float)RAND_MAX;
 		for (int i = 0; i < 4; i++) {
 			if (x < fx[i]) {
-				float y = (float) rand() / (float) RAND_MAX;
+				float y = (float)rand() / (float)RAND_MAX;
 				for (int j = 0; j < 4; j++)
 					if (y < tempVector2[i][j]) {
 						out[i][j]++;
@@ -52,16 +52,16 @@ int main(){
 			}
 			if (flag) { flag = 0; break; }
 		}
-	iterator++;
+		iterator++;
 	}
-
-
 
 	for (int i = 0; i < 4; i++) {
 		std::cout << i + 1 << ":    ";
-		for (int j = 0; j < 4; j++)
-			std::cout << out[i][j] << " (" << probabilities[i][j]<<"),  ";
+		for (int j = 0; j < 4; j++) {
+			std::cout << out[i][j] << " (p = " << probabilities[i][j] << ")";
+			if (j != 3) std::cout << ", ";
+		}
 		std::cout << "\n";
 	}
 	return 0;
-}
+};
