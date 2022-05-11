@@ -7,10 +7,10 @@ int main() {
 	std::srand(time(0));
 	// Probability of the appearance of a pair of numbers
 	float probabilities[4][4] = {
-						{ 0.1, 0.0, 0.1, 0.2 },
-						{ 0.0, 0.05, 0.05, 0.5 },
-						{ 0.0, 0.05, 0.05, 0.0 },
-						{ 0.2, 0.1, 0.0, 0.1 } };
+						{ 0.15, 0, 0, 0.2 },
+						{ 0.05, 0, 0.1, 0 },
+						{ 0, 0.1, 0, 0.05 },
+						{ 0.2, 0, 0, 0.15 } };
 
 	float x[4] = { 0 };
 	for (int i = 0; i < 4; i++)
@@ -25,7 +25,7 @@ int main() {
 	float tempVector[4][4] = { { 0 }, { 0 }, { 0 }, { 0 } };
 	for (int i = 0; i < 4; i++)
 		for (int j = 0; j < 4; j++)
-			tempVector[j][i] = probabilities[j][i] / fx[j];
+			tempVector[j][i] = probabilities[j][i] / x[j];
 
 	float tempVector2[4][4] = { { 0 }, { 0 }, { 0 }, { 0 } };
 	for (int i = 0; i < 4; i++)
@@ -42,7 +42,7 @@ int main() {
 		float x = (float)rand() / (float)RAND_MAX;
 		for (int i = 0; i < 4; i++) {
 			if (x < fx[i]) {
-				float y = (float)rand() / (float)RAND_MAX;
+				float y = (float)rand() / (float)RAND_MAX;	
 				for (int j = 0; j < 4; j++)
 					if (y < tempVector2[i][j]) {
 						out[i][j]++;
